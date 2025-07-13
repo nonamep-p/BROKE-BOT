@@ -1,0 +1,111 @@
+Goal: Add new features, weapons, items, and mechanics to the Plagg RPG system, ensuring balance, depth, and player engagement through unique unlock conditions, class-specific roles, and epic rewards.
+
+Structure:
+
+    Class-Specific Weapons and Items
+        Define weapons, armor, and consumables for each class (Warrior, Mage, Rogue, Archer, Healer).
+        Include attack, defense, and effects for each item.
+        Assign rarity tiers (Common, Uncommon, Rare, Epic, Legendary, Mythic) and balance stats accordingly.
+
+    Special/Unique Weapons (Class-Unlocked or Event-Only)
+        Introduce limited-time or event-only weapons with unique mechanics.
+        Create a hidden class (e.g., Chrono Weave) with exclusive weapons and abilities.
+        Design mythic weapons that require unusual or challenging achievements to obtain.
+
+    Weapon Obtainment Conditions
+        Set specific, story-driven conditions for acquiring rare weapons (e.g., defeating bosses at low levels, completing quests, or navigating dungeons).
+        Ensure balance by linking weapon power to difficulty and rarity.
+
+    Rarity System
+        Define stats, drop rates, and effects for each rarity tier.
+        Ensure high-tier weapons are powerful but require significant effort to earn.
+
+    Balance and Mechanics
+        Avoid overpowered weapons by adding trade-offs (e.g., high attack = low defense).
+        Ensure class diversity by making each weapon role-specific.
+        Include randomized effects (e.g., a “Paradox Core” that boosts a random stat).
+
+1. Class-Specific Weapons and Items
+Warrior Class
+
+    Iron Petal (Common): +10 attack, +2 defense, +5% boss damage.
+    Stump Cleave (Common): +15 attack, +5 defense, +3% crit chance.
+    Wooden Round (Common): +2 attack, +15 defense, +10% block chance.
+
+Mage Class
+
+    Sprintling (Uncommon): +10 attack, +1 defense, +5% mana regen.
+    Ashen Quill (Uncommon): +12 attack, +3 defense, +10% spell power.
+    The Tome of Flare (Uncommon): +8 attack, +2 defense, +3% fireball chance.
+
+Rogue Class
+
+    Shiny Slicer (Rare): +18 attack, +3 defense, +10% crit chance.
+    Whispering Curve (Rare): +20 attack, +2 defense, +7% ranged damage.
+    Stinger Vial (Rare): +5 attack, +0 defense, +10% stun chance.
+
+Archer Class
+
+    Sylvan Edge (Epic): +25 attack, +4 defense, +15% airborne damage.
+    Thunderpop (Epic): +30 attack, +3 defense, +20% crit chance.
+    Ethereal Tip (Epic): +5 attack, +0 defense, +5% movement speed reduction.
+
+Healer Class
+
+    Elder’s Pulse (Legendary): +15 attack, +7 defense, +20% healing power.
+    Nectar of Lifespan (Legendary): +0 attack, +0 defense, +200 healing (1 use).
+    Eternal Glow (Legendary): +10 attack, +5 defense, +10% mana regen, +5% crit heal.
+
+2. Special/Unique Weapons
+Chrono Weave (Hidden Class)
+
+    Timekeeper’s Edge (Legendary): +35 attack, +5 defense, Time Reversal (1 charge/3 days, reverses 5 turns).
+    Chrono Tap (Legendary): +25 attack, +3 defense, Temporal Surge (20% crit chance, +10% XP gain on crit).
+    Echo of Eternity (Legendary): +8 attack, +25 defense, Chrono Immunity (resists all debuffs).
+
+Mythic Weapons
+
+    The Last Echo (Boss Drop): +50 attack, +10 defense, +25% XP gain, +30% boss damage.
+    The Paradox Core (Paradox Chamber Reward): +40 attack, +8 defense, Randomized Stat Boost: 50% chance to increase attack, defense, or crit chance by +15%.
+
+3. Weapon Obtainment Conditions
+Chrono Weave Class
+
+    Requirement 1: Defeat the Time Rift Dragon (level 80+) while at level 30 or lower.
+    Requirement 2: Complete the "Chrono Whispers" quest (triggered during a "Time Rift" event).
+    Requirement 3: Collect 3 ancient relics (Relic of the Past, Relic of the Future, Relic of the Present).
+
+The Last Echo
+
+    Requirement 1: Defeat the Boss of the Paradox Realm (level 100+) without using buffs, potions, or healing items.
+    Requirement 2: Survive the fight with under 25% HP remaining.
+    Requirement 3: Complete a "Final Trial" quest (time-based puzzle).
+
+The Paradox Core
+
+    Requirement 1: Complete the "Paradox Chamber" dungeon (10-floor maze with time-based mechanics).
+    Requirement 2: Find the "Paradox Key" (drops under specific conditions).
+    Requirement 3: Use the Paradox Core in a battle with no status effects.
+
+4. Rarity System
+Rarity	Stats Modifier	Drop Rate	Effect Depth
+Common	+5–10%	50%	Basic
+Uncommon	+10–20%	25%	Minor Boost
+Rare	+20–30%	15%	Limited Use
+Epic	+30–40%	5%	High Impact
+Legendary	+40–50%	2%	World-Saving
+Mythic	+50–60%*	0.5%	Unique
+
+*Note: Mythic weapons have custom mechanics (e.g., "Shatter the Void" or "Cursed Luck").
+5. Balance and Mechanics
+
+    No overpowered weapons: Each has trade-offs (e.g., high attack = low defense).
+    Class diversity: Weapons are role-specific (e.g., Warriors focus on defense, Mages on spellpower).
+    Randomized effects: Use dice rolls or randomizers for items like the Paradox Core.
+    Unusual conditions: Ensure high-tier weapons require story-driven achievements.
+
+Final Notes for Implementation:
+
+    Use clear commands (e.g., $get_weapon, $unlock_class) to manage weapon acquisition.
+    Add narrative prompts (e.g., "A whisper in the void warns: 'You are the final time traveler.'").
+    Test balance by simulating player progression and combat scenarios.

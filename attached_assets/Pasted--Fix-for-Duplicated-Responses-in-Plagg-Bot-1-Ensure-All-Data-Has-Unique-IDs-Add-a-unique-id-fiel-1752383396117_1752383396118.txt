@@ -1,0 +1,149 @@
+🔧 Fix for Duplicated Responses in Plagg Bot
+1. Ensure All Data Has Unique IDs
+
+Add a unique id field to every item in your JSON files (e.g., weapons.json, items.json, shop_items.json). This ensures the bot can identify duplicates even if names overlap.
+✅ Example: weapons.json
+
+{
+  "weapons": [
+    {
+      "id": "1",
+      "name": "Timekeeper’s Edge",
+      "type": "Twin-Blade Sword",
+      "attack": 35,
+      "defense": 5,
+      "effect": "Time Reversal (1 charge/3 days, reverses 5 turns)",
+      "rarity": "Legendary"
+    },
+    {
+      "id": "2",
+      "name": "The Last Echo",
+      "type": "Great Axe",
+      "attack": 50,
+      "defense": 10,
+      "effect": "+25% XP gain, +30% boss damage",
+      "rarity": "Mythic"
+    }
+  ]
+}
+
+✅ Example: items.json
+
+{
+  "items": [
+    {
+      "id": "3",
+      "name": "Golden Elixir",
+      "type": "Consumable",
+      "effect": "Heals 500 HP",
+      "rarity": "Legendary"
+    },
+    {
+      "id": "4",
+      "name": "Stinger Vial",
+      "type": "Poison",
+      "effect": "+10% stun chance on hit",
+      "rarity": "Rare"
+    }
+  ]
+}
+
+    Note: If weapons.json and items.json have the same item name, the id ensures they are treated as unique.
+
+2. Fix the $shop Command to Deduplicate Items
+
+Update your $shop command to use id for uniqueness instead of relying on names.
+✅ Example Code (Python):
+
+@bot.command()
+async def shop(ctx):
+    # Load all data sources and combine them
+    combined = load_data("weapons.json") + load_data("items.json") + load_data("shop_items.json")
+    
+    # Deduplicate by ID
+    seen = set()
+    unique_items = []
+    for item in combined:
+        if item["id"] not in seen:
+            seen.add(item["id"])
+            unique_items.append(item)
+    
+    # Format the response
+    message = "**🔥 Plagg’s Shop**\n"
+    for item in unique_items:
+        message += f"- {item['name']} ({item['rarity']})\n"
+    
+    await ctx.send(message)
+
+3. Clear Cache Before Each Data Load
+
+Ensure the cache/ directory is cleared every time you reload data to prevent old entries from lingering.
+✅ Example: clear_cache() Function
+
+import os
+import shutil
+
+def clear_cache():
+    if os.path.exists("cache/"):
+        shutil.rmtree("cache")  # Delete the cache folder
+    os.makedirs("cache")     # Recreate it
+    print("✅ Cache cleared.")
+
+Call this before reloading data in your $reload command:
+
+@bot.command()
+async def reload(ctx):
+    clear_cache()
+    reload_data_files()  # Function that loads all JSON files into memory
+    await ctx.send("✅ Game data reloaded. Duplicates removed.")
+
+4. Validate JSON Files for Duplicates
+
+Use a script to check for duplicate ids or names in your JSON files.
+✅ Python Script to Validate:
+
+import json
+import os
+
+def validate_json_files():
+    files = ["weapons.json", "items.json", "shop_items.json"]
+    seen_ids = set()
+    
+    for file in files:
+        with open(file, "r") as f:
+            data = json.load(f)
+            for item in data.get("weapons", []) + data.get("items", []):
+                if "id" in item:
+                    if item["id"] in seen_ids:
+                        print(f"❌ Duplicate ID found in {file}: {item['id']}")
+                    seen_ids.add(item["id"])
+                else:
+                    print(f"❌ Missing ID in {file}: {item['name']}")
+
+    print("✅ JSON validation complete. No duplicates found.")
+
+Run this script periodically or before deploying updates.
+5. Example Output After Fix
+
+If everything is set up correctly, the shop should now display clean, unique items:
+
+🔥 Timekeeper’s Edge (Legendary) - Twin-Blade Sword  
+💥 The Last Echo (Mythic) - Great Axe  
+✨ The Paradox Core (Mythic) - Crystal Staff  
+🌟 Golden Elixir (Legendary) - Consumable
+
+6. Debugging Tips
+
+    Check the JSON files manually (e.g., weapons.json, items.json) for duplicate entries.
+    Run validate_json_files() to catch hidden issues.
+    Print loaded data in the $shop command to see what’s being combined:
+
+    print("Loaded items:", combined)  # Debug line
+
+7. Final Checklist
+Task	Done?
+Added unique id to every item	✅
+Updated $shop to deduplicate by id	✅
+Added clear_cache() before reload	✅
+Validated JSON files for duplicates	✅
+Tested with $shop and $reload commands	✅

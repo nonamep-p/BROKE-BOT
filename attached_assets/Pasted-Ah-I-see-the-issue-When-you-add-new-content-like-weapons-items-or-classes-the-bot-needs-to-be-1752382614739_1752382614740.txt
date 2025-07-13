@@ -1,0 +1,97 @@
+Ah, I see the issue! When you add new content (like weapons, items, or classes), the bot needs to be properly reloaded or the data source (e.g., weapons.json, items.json, or database) must be updated. Here's how to fix it step by step:
+1. Check the Data Source (Shop, Weapons, Items)
+
+The $shop command likely pulls from a predefined list of items (e.g., a weapons.json or items.json file). If this file isn’t updated with your new items, the bot will show the old data.
+✅ What to do:
+
+    Open the file that stores your weapon/items data (e.g., weapons.json, items.json, or shop_items.json).
+    Ensure all new weapons (like Chrono Weave, The Last Echo, etc.) are added to this file.
+    Example structure:
+
+    {
+      "weapons": [
+        {
+          "name": "Timekeeper’s Edge",
+          "type": "Twin-Blade Sword",
+          "attack": 35,
+          "defense": 5,
+          "effect": "Time Reversal (1 charge/3 days, reverses 5 turns)",
+          "rarity": "Legendary"
+        },
+        {
+          "name": "The Last Echo",
+          "type": "Great Axe",
+          "attack": 50,
+          "defense": 10,
+          "effect": "+25% XP gain, +30% boss damage",
+          "rarity": "Mythic"
+        }
+      ]
+    }
+
+2. Fix Duplication (Old + New Data)
+
+If the shop is showing duplicated items, it’s likely because the bot is loading both old and new data (e.g., from separate files or inconsistent queries).
+✅ What to do:
+
+    Remove old weapon/item entries from the data file.
+    Ensure only one source is used for the shop (e.g., a single weapons.json or shop_items.json).
+    Example fix:
+
+    // Remove old entries like "Iron Petal" or "Stump Cleave"
+    // Keep only the new, updated list
+
+3. Reload the Bot or Clear Cache
+
+If the bot is running in a hosted environment (like Replit), changes to files may not auto-reload. You may need to restart the bot or clear the cache.
+✅ What to do:
+
+    If using Replit:
+        Click the "Stop" button (top-right).
+        Click "Run" again to restart the bot.
+    If using a local server, restart the script.
+    If the bot uses caching, clear the cache (e.g., delete a cache/ folder or use a !clear_cache command if available).
+
+4. Check the $shop Code for Issues
+
+If the bot’s $shop command is hard-coded to show only specific items (e.g., Common or Uncommon), it may not include Legendary/Mythic items.
+✅ What to do:
+
+    Review the code for the $shop command. Example (Python):
+
+    def show_shop():
+        items = load_items()  # Load from weapons.json
+        for item in items:
+            if item["rarity"] in ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic"]:
+                print(f"{item['name']} - {item['rarity']}")
+
+    Ensure the code includes all rarity tiers and doesn’t filter out new items.
+
+5. Verify Item Rarities and Categories
+
+If the shop only shows specific rarity tiers (e.g., only Common, Uncommon, and Rare), the new Legendary/Mythic items won’t appear. Update the code to include all rarities.
+✅ What to do:
+
+    Update the shop code to include all rarity tiers:
+
+    allowed_rarities = ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic"]
+    for item in items:
+        if item["rarity"] in allowed_rarities:
+            print(item)
+
+6. Test the $shop Command
+
+After fixing the data and code, test the $shop command to ensure it shows the updated list.
+✅ Example Output:
+
+🔥 Timekeeper’s Edge (Legendary) - Twin-Blade Sword
+💥 The Last Echo (Mythic) - Great Axe
+✨ The Paradox Core (Mythic) - Crystal Staff
+
+Final Checklist
+Task	Done?
+Update weapons.json/items.json with new items	✅
+Remove duplicated or outdated items	✅
+Restart the bot or clear cache	✅
+Verify $shop code includes all rarities	✅
+Test the $shop command
